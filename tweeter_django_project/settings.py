@@ -73,12 +73,19 @@ WSGI_APPLICATION = 'tweeter_django_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+
+# swapping SQLite for Postgres
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'twitter_clone_db',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',  # Or your PostgreSQL server address
+        'PORT': '5432',       # Default port for PostgreSQL
     }
 }
+
 
 
 # Password validation
