@@ -2,9 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{% block title %}Tweeter{% endblock %}</title>
 </head>
 <body>
-
+    <nav>
+        <!-- Navigation panel content -->
+        <ul>
+            <li><a href="/">Home</a></li>
+            <!-- Add other navigation links as needed -->
+        </ul>
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <!-- Footer content if needed -->
 </body>
 </html>
