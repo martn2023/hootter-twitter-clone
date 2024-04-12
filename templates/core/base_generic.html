@@ -2,19 +2,83 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Tweeter{% endblock %}</title>
+    <title>Your Site</title>
+        <style>
+            body {
+                display: flex;
+                margin: 0;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+            nav {
+                flex: 0 0 250px; /* Widen the nav bar */
+                height: 100vh; /* Full height */
+                background-color: #1da1f2; /* Dark blue background */
+                padding-top: 20px;
+                color: white; /* Set text color to white */
+            }
+            nav ul {
+                list-style-type: none; /* Remove bullets */
+                padding: 0;
+                margin: 0;
+            }
+            nav ul li {
+                padding: 8px 16px;
+                font-size: 18px; /* Increase font size */
+                font-weight: bold; /* Bolden the font */
+                color: white; /* Set text color to white */
+            }
+            nav ul li a {
+                text-decoration: none; /* Remove underline from links */
+                display: block;
+                color: white; /* Set text color to white */
+            }
+            nav ul li a:hover {
+                background-color: #f0f0f0; /* Light gray for hover */
+            }
+            nav ul li a:visited {
+                color: white; /* Visited links remain white */
+            }
+            .submenu {
+                font-size: 18px; /* Keep submenu text size the same */
+                padding-left: 20px; /* Indent submenu */
+                color: white; /* Set text color to white */
+            }
+            .smaller {
+                font-size: 12px; /* Smaller font size for the parenthetical */
+                display: block; /* Ensure it appears on a new line */
+            }
+            section {
+                flex-grow: 1;
+                padding: 20px;
+            }
+            .recommended {
+                font-size: 14px; /* Smaller font size for "Recommended" */
+            }
+
+        </style>
+
 </head>
 <body>
     <nav>
-        <!-- Navigation panel content -->
         <ul>
-            <li><a href="/">Home</a></li>
-            <!-- Add other navigation links as needed -->
+            <li>Tweets
+                <br>(recommended)
+                <ul>
+                    <li><a href="#">Yours</a></li>
+                    <li><a href="#">Others (browsing all)</a></li>
+                </ul>
+            </li>
+            <li>People (subscribed to)
+                <ul>
+                    <li><a href="#">You</a></li>
+                    <li><a href="#">Others (browsing all)</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Logout</a></li>
         </ul>
     </nav>
-    <main>
+    <section>
         {% block content %}{% endblock %}
-    </main>
-    <!-- Footer content if needed -->
+    </section>
 </body>
 </html>

@@ -14,6 +14,13 @@ A slim social media site similar to Twitter, but with a few design nuances:
 >  * in A's Feed, B's Original Posts show up, but not B's replies
 >* Feed content is not censored, filtered, prioritized by select authors nor following size. For now, content is only sortable in reverse chronology 
 
+
+## Live:
+>**PERSISTENT DATA - PostGres:**
+Heroku doesn't support persistent data with SQLlite, which drove me towards PostGres. This marks my first PostGres installation ever.
+
+
+
 ## New technical achievements:
 >**PERSISTENT DATA - PostGres:**
 Heroku doesn't support persistent data with SQLlite, which drove me towards PostGres. This marks my first PostGres installation ever.
