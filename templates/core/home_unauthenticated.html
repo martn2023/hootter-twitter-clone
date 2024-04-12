@@ -1,14 +1,25 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Tweeter Homepage</title>
+    <style>
+        .logo {
+            width: 150px; /* Adjust the size as needed */
+            height: auto;
+            margin-top: 20px; /* Adjust the margin as needed */
+        }
+    </style>
 </head>
 <body>
 <center>
     <h1>You are not logged in yet.</h1>
 
     <p>Either <a href="{% url 'user_management:login_start' %}">log in</a>, or <a href="{% url 'user_management:register_new_user' %}">register</a>.</p>
+
+    <!-- Owl Logo -->
+    <img src="{% static 'img/owl_logo_simple.webp' %}" alt="Owl Logo" class="logo">
 </center>
 </body>
 </html>
