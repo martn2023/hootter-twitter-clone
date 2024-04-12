@@ -1,11 +1,11 @@
+# views.py
+
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
 
-# View for authenticated users
-@login_required(login_url='/login/')  # Redirects to /login/ if not authenticated
-def home_authenticated(request):
-    return render(request, 'core/home_authenticated.html')
-
-# View for unauthenticated users
-def home_unauthenticated(request):
-    return render(request, 'core/home_unauthenticated.html')
+def home(request):
+    if request.user.is_authenticated:
+        # If user is authenticated, render the authenticated home template
+        return render(request, 'core/home_authenticated.html')
+    else:
+        # If user is not authenticated, render the unauthenticated home template
+        return render(request, 'core/home_unauthenticated.html')
