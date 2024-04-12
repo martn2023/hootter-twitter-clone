@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.http import HttpResponse
 from .forms import ExtendedUserCreationForm
@@ -21,6 +21,10 @@ def login_start(request):
             return redirect('login_start')
     else:
         return render(request, 'user_management/login_start.html')
+
+def logout_user(request):
+    logout(request)
+    return redirect('home')
 
 def register_new_user(request):
     if request.method == 'POST':
