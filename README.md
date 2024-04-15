@@ -1,3 +1,33 @@
+# building steps
+
+view user profile
+edit user profile
+
+
+create Hoot
+    the model
+    url pathing with userID/postID
+    likers
+view a Hoot
+
+
+
+
+since replies are tied to Originals, see if you can have a module within a module
+create a reply
+    includes author (foreign key)
+    post date (since there's no edit)
+    likers? (do we store liked messages inside a user, or store users inside the message, or do we store likers inside the original message thread?)
+
+view a reply
+
+attach a reply (foreign key) to a post
+
+
+
+
+
+
 # Tweeter (Twitter clone)
 A live demo will be hosted on Heroku
 
@@ -6,7 +36,8 @@ Last week, I published my first homegrown CRUD: [Yindeed](https://github.com/mar
 
 ## What I built:
 >**Overview:**<br>
-A slim social media site similar to Twitter, but with a few design nuances:
+Hootter is like a Twitter, but for a wiser crowd to share wisdom.
+
 >* user A can create an "Original Post":
 >  * users A or B can "Reply" to Original Post, but not to a Reply
 >  * replies from B show up in A's "Feed"

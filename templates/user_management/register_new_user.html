@@ -1,4 +1,5 @@
 <!-- user_management/templates/user_management/register.html -->
+{% load static %}
 
 {% block content %}
   <h2>Register</h2>
@@ -7,4 +8,7 @@
     {{ form.as_p }}
     <button type="submit">Register</button>
   </form>
+
+  <img src="{% static 'img/owl_logo_simple.webp' %}" alt="Owl Logo" class="logo">
+
 {% endblock %}

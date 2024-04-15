@@ -1,7 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.http import HttpResponse
+
+from django.contrib.auth.models import User
+
 from .forms import ExtendedUserCreationForm
 
 def login_start(request):
@@ -36,3 +39,16 @@ def register_new_user(request):
     else:
         form = ExtendedUserCreationForm()
     return render(request, 'user_management/register_new_user.html', {'form': form})
+
+
+def ExtendedUserProfileDetails(request, user_id):
+    if not request.user.is_authenticated:
+        return redirect('user_management:login_start')
+
+    user = get_object_or_404(User, pk=user_id)
+    try:
+        profile = user.extended_profile
+    except ExtendedUserProfile.DoesNotExist:
+        return HttpResponse("The user's profile does not exist.", status=404)
+
+    return render(request, 'user_management/user_profile_view.html', {'user_profile': profile})

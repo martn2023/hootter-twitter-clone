@@ -61,19 +61,23 @@
 <body>
     <nav>
         <ul>
-            <li>Tweets
-                <br>(recommended)
+            <li>Owls
                 <ul>
-                    <li><a href="#">Yours</a></li>
-                    <li><a href="#">Others (browsing all)</a></li>
+                    <li><a href="#">Favorites</a></li>
+                    <li><a href="#">Discover</a></li>
+                    <li><a href="#">Edit profile</a></li>
                 </ul>
             </li>
-            <li>People (subscribed to)
+            <br>
+            <li>Hoots
                 <ul>
-                    <li><a href="#">You</a></li>
-                    <li><a href="#">Others (browsing all)</a></li>
+                    <li><a href="#">From you</a></li>
+                    <li><a href="#">From everyone</a></li>
                 </ul>
             </li>
+
+            <br>
+
             <li><a href="{% url 'user_management:logout' %}">Logout</a></li>
         </ul>
     </nav>
