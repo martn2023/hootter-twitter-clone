@@ -3,7 +3,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Default Title{% endblock %}</title>
+    <title>
+        {% block title %} Hootter.com - Owl #{{ user_profile.user.id }} {% endblock title %}
+    </title>
 </head>
 <body>
     {% block content %}
@@ -11,3 +13,5 @@
     {% endblock content %}
 </body>
 </html>
+
+
