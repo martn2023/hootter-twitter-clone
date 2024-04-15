@@ -1,10 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'core/base_generic.html' %}
 
-</body>
-</html>
+{% block title %}Edit Profile - Hootter.com{% endblock title %}
+
+{% block content %}
+<div style="display: flex; justify-content: center; width: 100%;">
+    <div style="text-align: left; margin-top: 20px; max-width: 500px; width: 100%;">
+        <h1>Edit Profile</h1>
+
+        <form method="post" action="{% url 'user_management:profile_edit' %}">
+            {% csrf_token %}
+            <label for="bio">Bio:</label><br>
+            <!-- Set maxlength to 300 to match the model's constraint -->
+            <textarea id="bio" name="bio" rows="4" cols="50" maxlength="300" style="width: 100%;">{{ user_profile.bio }}</textarea><br><br>
+
+            <input type="submit" value="Save Changes" style="width: 100%;">
+        </form>
+    </div>
+</div>
+{% endblock content %}

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse
 
@@ -52,3 +53,23 @@ def ExtendedUserProfileDetails(request, user_id):
         return HttpResponse("The user's profile does not exist.", status=404)
 
     return render(request, 'user_management/user_profile_view.html', {'user_profile': profile})
+
+@login_required
+def profile_edit(request):
+    # Since the user is logged in, request.user will be the User instance
+    try:
+        user_profile = request.user.extended_profile
+    except ExtendedUserProfile.DoesNotExist:
+        # Handle the case if for some reason the profile does not exist
+        user_profile = ExtendedUserProfile.objects.create(user=request.user)
+
+    if request.method == 'POST':
+        # Process the form data
+        bio = request.POST.get('bio', '')
+        user_profile.bio = bio
+        user_profile.save()
+        # Redirect to the profile view page after saving
+        return redirect('user_management:user_details', user_id=request.user.id)
+
+    # If it's a GET request, display the form with the current bio
+    return render(request, 'user_management/user_profile_edit.html', {'user_profile': user_profile})

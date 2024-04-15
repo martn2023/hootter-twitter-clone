@@ -1,17 +1,21 @@
 {% extends 'core/base_generic.html' %}
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>
-        {% block title %} Hootter.com - Owl #{{ user_profile.user.id }} {% endblock title %}
-    </title>
-</head>
-<body>
-    {% block content %}
-    <!-- Default content that can be overridden by child templates -->
-    {% endblock content %}
-</body>
-</html>
+{% block title %}Hootter.com - Owl #{{ user_profile.user.id }}{% endblock title %}
 
+{% block content %}
+<div style="margin-top:20px;">
+    <!-- Display the username in large, bold letters with an "@" sign -->
+    <h1 style="font-weight:bold;">@{{ user_profile.user.username }}</h1>
 
+    <!-- Display the bio from the ExtendedUserProfile model -->
+    <p>{{ user_profile.bio }}</p>
+
+    <!-- Show "edit profile" button if the logged-in user is viewing their own profile -->
+    {% if request.user.is_authenticated and request.user == user_profile.user %}
+        <br>
+        <br>
+        <!-- Updated link to point to the profile edit page -->
+        <button onclick="location.href='{% url 'user_management:profile_edit' %}'">Edit Profile</button>
+    {% endif %}
+</div>
+{% endblock content %}
