@@ -1,10 +1,13 @@
-<!DOCTYPE html>
+{% extends 'core/base_generic.html' %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hootter - Owl #</title>
+    <title>{% block title %}Default Title{% endblock %}</title>
 </head>
 <body>
-
+    {% block content %}
+    <!-- Default content that can be overridden by child templates -->
+    {% endblock content %}
 </body>
 </html>

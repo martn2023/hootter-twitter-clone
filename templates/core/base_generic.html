@@ -59,6 +59,7 @@
 
 </head>
 <body>
+    {% if request.user.is_authenticated %}
     <nav>
         <ul>
             <li>Owls
@@ -81,6 +82,9 @@
             <li><a href="{% url 'user_management:logout' %}">Logout</a></li>
         </ul>
     </nav>
+
+    {% endif %}
+
     <section>
         {% block content %}{% endblock %}
     </section>
