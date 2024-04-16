@@ -3,10 +3,24 @@ from .models import Post
 from django.contrib.auth.decorators import login_required
 
 @login_required
-def create_post(request):
+def create_post(request, parent_id=None):
+    parent_post = None
+    if parent_id:
+        parent_post = get_object_or_404(Post, id=parent_id)  # Ensure parent post exists
+
     if request.method == "POST":
-        content = request.POST.get("content")
-        parent_id = request.POST.get("parent_id", None)
-        Post.objects.create(author=request.user, content=content, parent_post_id=parent_id)
-        return redirect('public_messages:post_list')
-    return render(request, 'public_messages/public_message_compose_form.html')
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.parent_post = parent_post  # Set this post as a reply if parent_id exists
+            post.save()
+            messages.success(request, "Your message has been posted!")
+            return redirect('public_messages:post_list')
+    else:
+        form = PostForm()
+
+    return render(request, 'public_messages/public_message_compose.html', {
+        'form': form,
+        'parent_post': parent_post
+    })

@@ -2,11 +2,11 @@
 
 {% block content %}
 <div class="container">
-    <h1>Create a New Post</h1>
-    <form method="post" action="{% url 'public_messages:create_post' %}">
+    <h1>{% if parent_post %}Write Your Reply{% else %}Start a Conversation{% endif %}</h1>
+    <form method="post" action="{% url 'public_messages:create_post' parent_id=parent_post.id if parent_post else '' %}">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Post</button>
+        <button type="submit" class="btn btn-primary">{% if parent_post %}Post Reply{% else %}Post{% endif %}</button>
     </form>
 </div>
 
