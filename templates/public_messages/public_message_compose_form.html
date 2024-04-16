@@ -1,0 +1,20 @@
+{% extends 'core/base_generic.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Create a New Post</h1>
+    <form method="post" action="{% url 'public_messages:create_post' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Post</button>
+    </form>
+</div>
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div {% if message.tags %}class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
