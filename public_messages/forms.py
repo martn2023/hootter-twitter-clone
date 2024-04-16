@@ -1,20 +1,18 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django import forms
 from .models import Post
-from .forms import PostForm
-from django.contrib import messages
 
-@login_required
-def create_post(request):
-    if request.method == "POST":
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.save()
-            messages.success(request, "Post created successfully!")
-            return redirect('public_messages:create_post')  # Redirect as needed
-    else:
-        form = PostForm()
+class PostForm(forms.ModelForm):
+    content = forms.CharField(
+        max_length=300,  # Sets the maximum character length for validation
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'rows': 4,
+            'maxlength': 300,  # HTML attribute to prevent typing more than 300 characters
+            'placeholder': 'Share your thoughts...'
+        }),
+        label='Content',
+    )
 
-    return render(request, 'public_messages/public_message_compose_form.html', {'form': form})
+    class Meta:
+        model = Post
+        fields = ['content']

@@ -3,10 +3,13 @@
 {% block content %}
 <div class="container">
     <h1>{% if parent_post %}Write Your Reply{% else %}Start a Conversation{% endif %}</h1>
-    <form method="post" action="{% url 'public_messages:create_post' parent_id=parent_post.id if parent_post else '' %}">
+    <form method="post" action="{% if parent_post %}{% url 'public_messages:create_post' parent_id=parent_post.id %}{% else %}{% url 'public_messages:create_post' %}{% endif %}">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">{% if parent_post %}Post Reply{% else %}Post{% endif %}</button>
+        {{ form.content }}
+        <br>
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary">{% if parent_post %}Submit reply{% else %}Create thread{% endif %}</button>
     </form>
 </div>
 
