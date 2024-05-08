@@ -30,3 +30,12 @@ def own_posts(request):
 
     # A safety net, although ideally every condition should be handled explicitly
     return redirect('some_default_page')
+
+
+def everyone_elses_posts(request):
+    if not request.user.is_authenticated:
+        return redirect('user_management:login')
+
+    # Fetch posts where the author is not the current user
+    posts = Post.objects.exclude(author=request.user).order_by('-creation_time')
+    return render(request, 'public_messages/everyone_elses_posts.html', {'posts': posts})

@@ -1,0 +1,23 @@
+{% extends 'core/base_generic.html' %}
+
+{% block title %}Everyone Else's Posts{% endblock %}
+
+{% block content %}
+<h2>Everyone else's Hoots (recent first)</h2>
+<br>
+<div class="posts-list">
+    {% for post in posts %}
+    <div class="post">
+        <p class="post-date">
+            <!-- Corrected URL to point to the user's profile -->
+            <strong><a href="{% url 'user_management:user_details' user_id=post.author.id %}">{{ post.author.username }}</a></strong> Hooted this at <em>{{ post.creation_time|date:"F d, Y H:i" }}</em>
+        </p>
+        <div class="post-content">{{ post.content }}</div>
+        <a href="#">Reply</a>  <!-- This will be linked properly in subsequent steps -->
+        <br><br><br>
+    </div>
+    {% empty %}
+    <p>No posts from others to display.</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -60,7 +60,7 @@
     {% if request.user.is_authenticated %}
     <nav>
         <ul>
-            <li>Owls
+            <li>Profiles
                 <ul>
                     <li><a href="#">Favorites</a></li>
                     <li><a href="#">Discover</a></li>
@@ -73,7 +73,7 @@
                 <ul>
                     <li><a href="{% url 'public_messages:create_post' %}">Hoot new wisdom</a></li>
                     <li><a href="{% url 'public_messages:see_my_posts' %}">From you</a></li>
-                    <li><a href="#">From everyone</a></li>
+                    <li><a href="{% url 'public_messages:see_everyone_elses_posts' %}">From everyone</a></li>
                 </ul>
             </li>
             <br>

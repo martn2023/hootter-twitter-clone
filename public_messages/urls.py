@@ -8,6 +8,8 @@ urlpatterns = [
 
     path('mine', views.own_posts, name='see_my_posts'),
 
+    path('everyone_else', views.everyone_elses_posts, name='see_everyone_elses_posts'),
+
     path('reply/<int:parent_id>/', views.create_post, name='reply_post'),
 
 ]
