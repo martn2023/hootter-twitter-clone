@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Post
 from .forms import PostForm  # Ensure this is imported here
 from django.contrib import messages
+from django.shortcuts import render, redirect
 
 @login_required
 def create_post(request):
@@ -18,3 +19,11 @@ def create_post(request):
         form = PostForm()
 
     return render(request, 'public_messages/public_message_compose_form.html', {'form': form})
+
+
+def own_posts(request):
+    if not request.user.is_authenticated:
+        return redirect('user_management:login')  # Adjust based on your login URL name
+
+    user_posts = Post.objects.filter(author=request.user)  # Assuming 'author' is the field name
+    return render(request, 'public_messages/my_posts.html', {'posts': user_posts})
