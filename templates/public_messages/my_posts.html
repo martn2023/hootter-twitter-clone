@@ -4,11 +4,15 @@
 
 {% block content %}
 <h2>My Posts</h2>
-<ul>
+<div class="posts-list">
     {% for post in posts %}
-    <li>{{ post.created_at }}: {{ post.content }}</li>
+    <div class="post">
+        <p class="post-date"><em>{{ post.creation_time|date:"F d, Y H:i" }}</em></p>
+
+        <div class="post-content">{{ post.content }}</div>
+    </div>
     {% empty %}
-    <li>You have not posted anything yet.</li>
+    <p>You have not posted anything yet.</p>
     {% endfor %}
-</ul>
+</div>
 {% endblock %}

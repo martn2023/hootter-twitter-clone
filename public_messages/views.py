@@ -23,7 +23,10 @@ def create_post(request):
 
 def own_posts(request):
     if not request.user.is_authenticated:
-        return redirect('user_management:login')  # Adjust based on your login URL name
+        return redirect('user_management:login')
+    else:
+        user_posts = Post.objects.filter(author=request.user).order_by('-creation_time')
+        return render(request, 'public_messages/my_posts.html', {'posts': user_posts})
 
-    user_posts = Post.objects.filter(author=request.user)  # Assuming 'author' is the field name
-    return render(request, 'public_messages/my_posts.html', {'posts': user_posts})
+    # A safety net, although ideally every condition should be handled explicitly
+    return redirect('some_default_page')
