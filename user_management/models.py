@@ -10,10 +10,9 @@ class ExtendedUserProfile(models.Model):
     def __str__(self):
         return f"{self.user.username}'s profile"
 
-# Signal to create or update the user profile whenever a User instance is created or saved
+# Signal to create or update the user profile whenever a User instance is created
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
-        ExtendedUserProfile.objects.create(user=instance)
-    else:
-        instance.extended_profile.save()
+        ExtendedUserProfile.objects.get_or_create(user=instance)
+    # No need for an else clause if you're not updating the profile here

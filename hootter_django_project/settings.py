@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'public_messages',
     'content_feed',
 
+    'django_extensions',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -82,6 +84,7 @@ WSGI_APPLICATION = 'hootter_django_project.wsgi.application'
 
 
 # swapping SQLite for Postgres
+# keep in mind that it's one database per device, so the desktop doesnt have user info from laptop
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
