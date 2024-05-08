@@ -56,6 +56,8 @@ Heroku doesn't support persistent data with SQLlite, which drove me towards Post
 >**PERSISTENT DATA - PostGres:**
 Heroku doesn't support persistent data with SQLlite, which drove me towards PostGres. This marks my first PostGres installation ever.
 
+>**MULTIPLE DEVICES:**
+Had to install and configure PostGres on a 2nd machine, creating a 2nd database altogether and figuring out git updates
 
 ## Potential improvements:
 >**NESTED REPLIES:**<br>

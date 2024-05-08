@@ -36,7 +36,7 @@ def register_new_user(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('some_home_view')  # Redirect to a home page or similar
+            return redirect('/')  # Redirect to a home page or similar
     else:
         form = ExtendedUserCreationForm()
     return render(request, 'user_management/register_new_user.html', {'form': form})
