@@ -2,14 +2,22 @@
 
 {% block content %}
 <div class="container">
-    <h1>{% if parent_post %}Write Your Reply{% else %}Start a Conversation{% endif %}</h1>
-    <form method="post" action="{% if parent_post %}{% url 'public_messages:create_post' parent_id=parent_post.id %}{% else %}{% url 'public_messages:create_post' %}{% endif %}">
+    <h1>{% if parent_post %}Write Your Reply{% else %}Hoot out fresh wisdom!{% endif %}</h1>
+
+    {% if parent_post %}
+    <div class="original-post">
+        <h2>Original Post by {{ parent_post.author.username }}</h2>
+        <p>{{ parent_post.content }}</p>
+    </div>
+    {% endif %}
+
+    <form method="post" action="{% if parent_post %}{% url 'public_messages:reply_post' parent_id=parent_post.id %}{% else %}{% url 'public_messages:create_post' %}{% endif %}">
         {% csrf_token %}
         {{ form.content }}
         <br>
         <br>
         <br>
-        <button type="submit" class="btn btn-primary">{% if parent_post %}Submit reply{% else %}Create thread{% endif %}</button>
+        <button type="submit" class="btn btn-primary">{% if parent_post %}Submit Reply{% else %}Create Thread{% endif %}</button>
     </form>
 </div>
 

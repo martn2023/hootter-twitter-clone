@@ -9,11 +9,11 @@
     {% for post in posts %}
     <div class="post">
         <p class="post-date">
-            <!-- Corrected URL to point to the user's profile -->
             <strong><a href="{% url 'user_management:user_details' user_id=post.author.id %}">{{ post.author.username }}</a></strong> Hooted this at <em>{{ post.creation_time|date:"F d, Y H:i" }}</em>
         </p>
         <div class="post-content">{{ post.content }}</div>
-        <a href="#">Reply</a>  <!-- This will be linked properly in subsequent steps -->
+        <!-- Updated to dynamically create the reply link using the post's ID -->
+        <a href="{% url 'public_messages:reply_post' parent_id=post.id %}">Reply</a>
         <br><br><br>
     </div>
     {% empty %}
