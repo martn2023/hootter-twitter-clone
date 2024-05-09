@@ -4,6 +4,8 @@ from .models import Post
 from .forms import PostForm  # Ensure this is imported here
 from django.contrib import messages
 from django.shortcuts import render, redirect
+from django.db.models import Prefetch
+
 
 @login_required
 def create_post(request, parent_id=None):
@@ -28,6 +30,20 @@ def create_post(request, parent_id=None):
         'parent_post': parent_post  # Make sure this is correctly passed
     })
 
+def post_details(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    # Redirect to the parent post if this is a reply
+    if post.parent_post:
+        return redirect('public_messages:post_details', post_id=post.parent_post.id)
+
+    # If it's not a reply, fetch and render the post details along with replies
+    replies = Post.objects.filter(parent_post=post).order_by('creation_time')
+    return render(request, 'public_messages/post_details.html', {'post': post, 'replies': replies})
+
+
+
+
 
 
 def own_posts(request):
@@ -40,15 +56,17 @@ def own_posts(request):
     # A safety net, although ideally every condition should be handled explicitly
     return redirect('some_default_page')
 
-
 def everyone_elses_posts(request):
     if not request.user.is_authenticated:
         return redirect('user_management:login')
 
-    # Fetch posts where the author is not the current user
-    posts = Post.objects.exclude(author=request.user).order_by('-creation_time')
-    return render(request, 'public_messages/everyone_elses_posts.html', {'posts': posts})
+    # Prefetch replies to minimize database hits
+    reply_prefetch = Prefetch('replies', queryset=Post.objects.order_by('creation_time'))
 
+    # Fetch posts where the author is not the current user and they have no parent (top-level posts)
+    posts = Post.objects.exclude(author=request.user).filter(parent_post__isnull=True).prefetch_related(reply_prefetch).order_by('-creation_time')
+
+    return render(request, 'public_messages/everyone_elses_posts.html', {'posts': posts})
 
 def create_reply(author, content, parent_post_id):
     parent_post = Post.objects.get(id=parent_post_id)  # Get the parent post

@@ -8,7 +8,7 @@ class PostForm(forms.ModelForm):
             'class': 'form-control',
             'rows': 4,
             'maxlength': 300,  # HTML attribute to prevent typing more than 300 characters
-            'placeholder': 'Share your thoughts...'
+            'placeholder': 'Share your wisdom...'
         }),
         label='Content',
     )

@@ -1,0 +1,20 @@
+{% extends 'core/base_generic.html' %}
+
+{% block content %}
+<div class="post">
+    <h2>{{ post.content }}</h2>
+    <p>Posted by {{ post.author.username }} on {{ post.creation_time }}</p>
+</div>
+<hr>
+<div class="replies">
+    <h3>Replies</h3>
+    {% for reply in replies %}
+    <div class="reply">
+        <p>{{ reply.content }}</p>
+        <p>Replied by {{ reply.author.username }} on {{ reply.creation_time }}</p>
+    </div>
+    {% empty %}
+    <p>No replies yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

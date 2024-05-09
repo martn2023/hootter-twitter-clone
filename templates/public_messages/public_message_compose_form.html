@@ -2,11 +2,13 @@
 
 {% block content %}
 <div class="container">
-    <h1>{% if parent_post %}Write Your Reply{% else %}Hoot out fresh wisdom!{% endif %}</h1>
+    <!-- Removed the explicit "Write Your Reply" heading to make it more succinct -->
+    <h1>{% if parent_post %}{% else %}Hoot out fresh wisdom!{% endif %}</h1>
 
     {% if parent_post %}
     <div class="original-post">
-        <h2>Original Post by {{ parent_post.author.username }}</h2>
+        <!-- Updated the text to be more succinct and user-friendly -->
+        <h2>{{ parent_post.author.username }}'s original hoot</h2>
         <p>{{ parent_post.content }}</p>
     </div>
     {% endif %}
