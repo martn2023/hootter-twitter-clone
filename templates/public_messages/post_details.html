@@ -2,16 +2,18 @@
 
 {% block content %}
 <div class="post">
-    <h2>{{ post.content }}</h2>
-    <p>Posted by {{ post.author.username }} on {{ post.creation_time }}</p>
+    <h2>Original Hoot</h2>  <!-- Ensured size matches "Replies" -->
+    <p style="font-size: 80%; font-weight: bold;">Posted by <a href="{% url 'user_management:user_details' user_id=post.author.id %}">{{ post.author.username }}</a> on <em>{{ post.creation_time }}</em></p>
+    <p>{{ post.content }}</p>
 </div>
 <hr>
 <div class="replies">
-    <h3>Replies</h3>
+    <h2>Replies</h2>
     {% for reply in replies %}
-    <div class="reply">
+    <div class="reply" style="margin-left: 20px;">
+        <p style="font-size: 80%; font-weight: bold;">Replied by <a href="{% url 'user_management:user_details' user_id=reply.author.id %}">{{ reply.author.username }}</a> on <em>{{ reply.creation_time }}</em></p>
         <p>{{ reply.content }}</p>
-        <p>Replied by {{ reply.author.username }} on {{ reply.creation_time }}</p>
+        <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
     </div>
     {% empty %}
     <p>No replies yet.</p>
