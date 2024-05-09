@@ -2,9 +2,10 @@
 
 {% block content %}
 <div class="post">
-    <h2>Original Hoot</h2>  <!-- Ensured size matches "Replies" -->
+    <h2>Original Hoot</h2>
     <p style="font-size: 80%; font-weight: bold;">Posted by <a href="{% url 'user_management:user_details' user_id=post.author.id %}">{{ post.author.username }}</a> on <em>{{ post.creation_time }}</em></p>
     <p>{{ post.content }}</p>
+    <p style="color: #cccccc; font-size: 0.7em; text-align: right;">Hoot# {{ post.id }}</p> <!-- Lighter gray, aligned right -->
 </div>
 <hr>
 <div class="replies">
@@ -13,6 +14,7 @@
     <div class="reply" style="margin-left: 20px;">
         <p style="font-size: 80%; font-weight: bold;">Replied by <a href="{% url 'user_management:user_details' user_id=reply.author.id %}">{{ reply.author.username }}</a> on <em>{{ reply.creation_time }}</em></p>
         <p>{{ reply.content }}</p>
+        <p style="color: #cccccc; font-size: 0.7em; text-align: right;">Hoot# {{ reply.id }}</p> <!-- Lighter gray, aligned right -->
         <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
     </div>
     {% empty %}
