@@ -1,0 +1,12 @@
+{% extends 'core/base_generic.html' %}
+
+{% block content %}
+<h1>Readers (Users who have never posted)</h1>
+<ul>
+    {% for user in readers %}
+    <li>{{ user.username }}</li>
+    {% empty %}
+    <li>No readers found.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

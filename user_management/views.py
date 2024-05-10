@@ -7,6 +7,8 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 
 from .forms import ExtendedUserCreationForm
+from django.db.models import Count, Q, F #take note that Q and F are terms of art used by Django
+from public_messages.models import Post
 
 def login_start(request):
     if request.method == 'POST':
@@ -74,13 +76,21 @@ def profile_edit(request):
     # If it's a GET request, display the form with the current bio
     return render(request, 'user_management/user_profile_edit.html', {'user_profile': user_profile})
 
+
 def list_users(request):
     users = User.objects.all().order_by('username')
 
-    # Group users based on their posting activity
-    posters = users.filter(posts__parent_post=None).distinct()
-    repliers = users.filter(posts__parent_post__isnull=False).distinct().exclude(id__in=posters)
-    readers = users.exclude(id__in=posters).exclude(id__in=repliers)
+    # Posters: Users who have at least one original post (a post with no parent)
+    posters = User.objects.filter(posts__parent_post__isnull=True).distinct()
+
+    # Repliers: Users who have at least one reply and no original posts
+    repliers = User.objects.annotate(
+        total_posts=Count('posts'),
+        reply_posts=Count('posts', filter=Q(posts__parent_post__isnull=False))
+    ).filter(total_posts=F('reply_posts'), total_posts__gt=0).distinct()
+
+    # Readers: Users who have not authored any posts
+    readers = User.objects.exclude(id__in=posters).exclude(id__in=repliers)
 
     context = {
         'posters': posters,
@@ -88,3 +98,43 @@ def list_users(request):
         'readers': readers
     }
     return render(request, 'user_management/list_users.html', context)
+
+def list_readers(request):
+    # Users who have authored posts
+    users_with_posts = User.objects.filter(posts__isnull=False).distinct()
+
+    # Readers: Users who have not authored any posts
+    readers = User.objects.exclude(id__in=users_with_posts).order_by('username')
+
+    context = {
+        'readers': readers
+    }
+    return render(request, 'user_management/list_readers.html', context)
+
+
+def list_posters(request):
+    # Users who have authored at least one original post (a post with no parent)
+    posters = User.objects.filter(posts__parent_post__isnull=True).distinct()
+
+    context = {
+        'posters': posters
+    }
+    return render(request, 'user_management/list_posters.html', context)
+
+
+def list_user_categories(request):
+    # Fetch all users
+    all_users = User.objects.all().order_by('username')
+
+    # Fetch users who have made any posts
+    users_with_posts = User.objects.filter(posts__isnull=False).distinct()
+
+    # Fetch users who have made at least one original post (a post with no parent)
+    posters = User.objects.filter(posts__parent_post__isnull=True).distinct()
+
+    context = {
+        'all_users': all_users,
+        'users_with_posts': users_with_posts,
+        'posters': posters
+    }
+    return render(request, 'user_management/user_categories.html', context)

@@ -1,0 +1,12 @@
+{% extends 'core/base_generic.html' %}
+
+{% block content %}
+    <h1>Posters (Users who started new conversations)</h1>
+    <ul>
+        {% for user in posters %}
+            <li>{{ user.username }}</li>
+        {% empty %}
+            <p>No posters found.</p>
+        {% endfor %}
+    </ul>
+{% endblock %}

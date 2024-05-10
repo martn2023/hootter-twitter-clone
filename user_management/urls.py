@@ -12,4 +12,7 @@ urlpatterns = [
     path('<int:user_id>/', views.ExtendedUserProfileDetails, name='user_details'),
     path('edit/', views.profile_edit, name='profile_edit'),
     path('users/', views.list_users, name='list_users'),
+    path('readers/', views.list_readers, name='list_readers'),
+    path('posters/', views.list_posters, name='list_posters'),
+    path('user_categories/', views.list_user_categories, name='user_categories'),
 ]
