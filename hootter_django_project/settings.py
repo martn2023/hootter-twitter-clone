@@ -27,7 +27,8 @@ DEBUG = True
 
 # settings.py
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'hootter-e38e977083a4.herokuapp.com']
+
 
 
 # Application definition
