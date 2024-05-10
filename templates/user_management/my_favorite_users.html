@@ -1,0 +1,28 @@
+{% extends 'core/base_generic.html' %}
+
+{% block title %}Following{% endblock %}
+
+{% block content %}
+<div style="margin-top:20px;">
+    <h1>Users I'm Following:</h1>
+    {% for user_info in user_data %}
+    <div style="margin-bottom: 30px;">  <!-- Add some space between users -->
+        <h3 style="margin-left: 20px;"> <!-- Reduce the size and indent the name -->
+            <a href="{% url 'user_management:user_details' user_id=user_info.user.id %}">
+                {{ user_info.user.username }} ({{ user_info.follower_count }} followers)
+            </a>
+        </h3>
+        {% if user_info.most_recent_post %}
+        <div style="margin-left: 40px;"> <!-- Indent post details -->
+            <p>Latest Post: {{ user_info.most_recent_post.content }}</p>
+            <p style="font-style: italic; font-size: 0.9em;">Posted on: {{ user_info.most_recent_post.creation_time|date:"M d, Y" }}</p>
+        </div>
+        {% else %}
+        <p style="margin-left: 40px;">No posts yet.</p>
+        {% endif %}
+    </div>
+    {% empty %}
+    <p>You are not following anyone yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

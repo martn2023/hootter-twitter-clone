@@ -155,3 +155,21 @@ def unfollow_user(request, user_id):
     user_to_unfollow = get_object_or_404(User, pk=user_id)
     FollowerRelationship.objects.filter(follower=request.user, followed=user_to_unfollow).delete()
     return redirect('user_management:user_details', user_id=user_id)
+
+
+
+@login_required
+def following_list(request):
+    following_users = request.user.following.all()  # Get all following relationships for the user
+    user_data = []
+    for relationship in following_users:
+        user = relationship.followed
+        follower_count = user.followers.count()
+        most_recent_post = Post.objects.filter(author=user).order_by('-creation_time').first()
+        user_data.append({
+            'user': user,
+            'follower_count': follower_count,
+            'most_recent_post': most_recent_post,
+        })
+
+    return render(request, 'user_management/my_favorite_users.html', {'user_data': user_data})

@@ -62,7 +62,7 @@
         <ul>
             <li>Profiles
                 <ul>
-                    <li><a href="#">Favorites</a></li>
+                    <li><a href="{% url 'user_management:following_list'%}">Favorites</a></li>
                     <li><a href="{% url 'user_management:user_categories'%}">Discover</a></li>
                     <!-- Link to the user's own profile using their ID -->
                     <li><a href="{% url 'user_management:user_details' user_id=request.user.id %}">Myself</a></li>
