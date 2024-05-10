@@ -73,3 +73,18 @@ def profile_edit(request):
 
     # If it's a GET request, display the form with the current bio
     return render(request, 'user_management/user_profile_edit.html', {'user_profile': user_profile})
+
+def list_users(request):
+    users = User.objects.all().order_by('username')
+
+    # Group users based on their posting activity
+    posters = users.filter(posts__parent_post=None).distinct()
+    repliers = users.filter(posts__parent_post__isnull=False).distinct().exclude(id__in=posters)
+    readers = users.exclude(id__in=posters).exclude(id__in=repliers)
+
+    context = {
+        'posters': posters,
+        'repliers': repliers,
+        'readers': readers
+    }
+    return render(request, 'user_management/list_users.html', context)
