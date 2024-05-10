@@ -1,0 +1,1 @@
+web: gunicorn hootter_django_project.wsgi:application --log-file -
