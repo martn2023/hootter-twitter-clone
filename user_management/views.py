@@ -48,24 +48,17 @@ def register_new_user(request):
 
 
 def ExtendedUserProfileDetails(request, user_id):
-    if not request.user.is_authenticated:
-        return redirect('user_management:login_start')
-
-    user = get_object_or_404(User, pk=user_id)
-    try:
-        profile = user.extended_profile
-    except ExtendedUserProfile.DoesNotExist:
-        return HttpResponse("The user's profile does not exist.", status=404)
-
-    # Fetch all posts by this user, including original posts and replies
-    all_posts = Post.objects.filter(author=user).order_by('-creation_time')
+    user_profile = get_object_or_404(User, id=user_id)
+    is_following = False
+    follower_count = user_profile.followers.count()  # Count followers
+    if request.user.is_authenticated:
+        is_following = FollowerRelationship.objects.filter(follower=request.user, followed=user_profile).exists()
 
     return render(request, 'user_management/user_profile_view.html', {
-        'user_profile': profile,
-        'original_posts': all_posts  # Updated variable name for clarity
+        'user_profile': user_profile,
+        'is_following': is_following,
+        'follower_count': follower_count,
     })
-
-
 
 @login_required
 def profile_edit(request):

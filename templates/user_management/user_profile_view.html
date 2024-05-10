@@ -1,13 +1,20 @@
 {% extends 'core/base_generic.html' %}
 
-{% block title %}Hootter.com - Owl #{{ user_profile.user.id }}{% endblock title %}
+{% block title %}Hootter.com - Owl #{{ user_profile.id }}{% endblock title %}
 
 {% block content %}
 <div style="margin-top:20px;">
-    <h1 style="font-weight:bold;">@{{ user_profile.user.username }}</h1>
-    <p>{{ user_profile.bio }}</p>
-    {% if request.user.is_authenticated and request.user == user_profile.user %}
+    <h1 style="font-weight:bold;">@{{ user_profile.username }} ({{ follower_count }} followers)</h1>
+    <p>{{ user_profile.extended_profile.bio }}</p>  <!-- Ensure this is where you want the bio -->
+    {% if request.user.is_authenticated and request.user != user_profile %}
+        {% if is_following %}
+            <a href="{% url 'user_management:unfollow_user' user_id=user_profile.id %}">Unfollow</a>
+        {% else %}
+            <a href="{% url 'user_management:follow_user' user_id=user_profile.id %}">Follow</a>
+        {% endif %}
         <br>
+    {% endif %}
+    {% if request.user == user_profile %}
         <button onclick="location.href='{% url 'user_management:profile_edit' %}'">Edit Profile</button>
     {% endif %}
 
@@ -29,7 +36,6 @@
             <a href="{% url 'public_messages:reply_post' parent_id=post.id %}">Reply</a>
             <br><br><br>
         </div>
-        <br>
         {% empty %}
         <p>No public communications to show.</p>
         {% endfor %}
