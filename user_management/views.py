@@ -9,6 +9,9 @@ from django.contrib.auth.models import User
 from .forms import ExtendedUserCreationForm
 from django.db.models import Count, Q, F #take note that Q and F are terms of art used by Django
 from public_messages.models import Post
+from django.contrib import messages
+from .models import User, FollowerRelationship
+
 
 def login_start(request):
     if request.method == 'POST':
@@ -54,7 +57,15 @@ def ExtendedUserProfileDetails(request, user_id):
     except ExtendedUserProfile.DoesNotExist:
         return HttpResponse("The user's profile does not exist.", status=404)
 
-    return render(request, 'user_management/user_profile_view.html', {'user_profile': profile})
+    # Fetch all posts by this user, including original posts and replies
+    all_posts = Post.objects.filter(author=user).order_by('-creation_time')
+
+    return render(request, 'user_management/user_profile_view.html', {
+        'user_profile': profile,
+        'original_posts': all_posts  # Updated variable name for clarity
+    })
+
+
 
 @login_required
 def profile_edit(request):
@@ -138,3 +149,16 @@ def list_user_categories(request):
         'posters': posters
     }
     return render(request, 'user_management/user_categories.html', context)
+
+@login_required
+def follow_user(request, user_id):
+    user_to_follow = get_object_or_404(User, pk=user_id)
+    if request.user != user_to_follow:
+        FollowerRelationship.objects.get_or_create(follower=request.user, followed=user_to_follow)
+    return redirect('user_management:user_details', user_id=user_id)
+
+@login_required
+def unfollow_user(request, user_id):
+    user_to_unfollow = get_object_or_404(User, pk=user_id)
+    FollowerRelationship.objects.filter(follower=request.user, followed=user_to_unfollow).delete()
+    return redirect('user_management:user_details', user_id=user_id)

@@ -15,4 +15,9 @@ urlpatterns = [
     path('readers/', views.list_readers, name='list_readers'),
     path('posters/', views.list_posters, name='list_posters'),
     path('user_categories/', views.list_user_categories, name='user_categories'),
+
+
+    path('follow/<int:user_id>/', views.follow_user, name='follow_user'),
+    path('unfollow/<int:user_id>/', views.unfollow_user, name='unfollow_user'),
+
 ]
