@@ -8,21 +8,21 @@ from django.db.models import Prefetch
 
 
 @login_required
+
 def create_post(request, parent_id=None):
+    parent_post = get_object_or_404(Post, id=parent_id) if parent_id else None
     if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            if parent_id:
-                # Fetch the parent post using the given parent_id
-                post.parent_post = get_object_or_404(Post, id=parent_id)
+            if parent_post:
+                post.parent_post = parent_post
             post.save()
             messages.success(request, "Post created successfully!")
-            return redirect('public_messages:create_post')
+            # Redirect to the detail page of the newly created post
+            return redirect('public_messages:post_details', post_id=post.id)
     else:
-        # If there's a parent_id, fetch the parent post and pass it to the form
-        parent_post = get_object_or_404(Post, id=parent_id) if parent_id else None
         form = PostForm()
 
     return render(request, 'public_messages/public_message_compose_form.html', {
