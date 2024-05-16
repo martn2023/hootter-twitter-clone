@@ -1,12 +1,11 @@
 # Hootter(Twitter clone)
-A live demo will be hosted on Heroku
 
 ## Author's context:
 Last week, I published my first homegrown CRUD: [Yindeed](https://github.com/martn2023/yindeed1/blob/master/README.md). The learnings and feedback from mentors has driven the following goals for this project:
 
 ## What I built:
 >**Overview:**<br>
-Hootter is like a Twitter, but for a wiser crowd to share wisdom.
+Hootter is like a Twitter, but for a wiser crowd (made of owls) to share wisdom.
 
 >* user A can create an "Original Post":
 >  * users A or B can "Reply" to Original Post, but not to a Reply
@@ -17,17 +16,18 @@ Hootter is like a Twitter, but for a wiser crowd to share wisdom.
 
 
 ## Live:
->**PERSISTENT DATA - PostGres:**
-Heroku doesn't support persistent data with SQLlite, which drove me towards PostGres. This marks my first PostGres installation ever.
+A live demo now hosted on <b>Heroku</b> at [https://hootter-e38e977083a4.herokuapp.com/](https://hootter-e38e977083a4.herokuapp.com/)
 
+<b>username</b>: wisebird<br>
+<b>password</b>: verywise
 
 
 ## New technical achievements:
->**PERSISTENT DATA - PostGres:**
+>**PERSISTENT DATA - Postgres:**
 Heroku doesn't support persistent data with SQLlite, which drove me towards PostGres. This marks my first PostGres installation ever.
 
 >**MULTIPLE DEVICES:**
-Had to install and configure PostGres on a 2nd machine, creating a 2nd database altogether and figuring out git updates
+Had to install and configure Postgres on a 2nd machine, creating a 2nd database altogether and figuring out git updates
 
 ## Potential improvements:
 >**NESTED REPLIES:**<br>
