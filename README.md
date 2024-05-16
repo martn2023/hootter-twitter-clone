@@ -1,34 +1,4 @@
-# building steps
-
-view user profile
-edit user profile
-
-
-create Hoot
-    the model
-    url pathing with userID/postID
-    likers
-view a Hoot
-
-
-
-
-since replies are tied to Originals, see if you can have a module within a module
-create a reply
-    includes author (foreign key)
-    post date (since there's no edit)
-    likers? (do we store liked messages inside a user, or store users inside the message, or do we store likers inside the original message thread?)
-
-view a reply
-
-attach a reply (foreign key) to a post
-
-
-
-
-
-
-# Tweeter (Twitter clone)
+# Hootter(Twitter clone)
 A live demo will be hosted on Heroku
 
 ## Author's context:

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -86,6 +87,17 @@ WSGI_APPLICATION = 'hootter_django_project.wsgi.application'
 
 # swapping SQLite for Postgres
 # keep in mind that it's one database per device, so the desktop doesnt have user info from laptop
+###
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
+    )
+}
+
+''' replacing this code for heroku
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -96,6 +108,7 @@ DATABASES = {
         'PORT': '5432',  # Default port for PostgreSQL
     }
 }
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
