@@ -51,6 +51,7 @@ def ExtendedUserProfileDetails(request, user_id):
     user_profile = get_object_or_404(User, id=user_id)
     is_following = False
     follower_count = user_profile.followers.count()  # Count followers
+    original_posts = Post.objects.filter(author=user_profile, parent_post__isnull=True).order_by('-creation_time')
     if request.user.is_authenticated:
         is_following = FollowerRelationship.objects.filter(follower=request.user, followed=user_profile).exists()
 
@@ -58,6 +59,7 @@ def ExtendedUserProfileDetails(request, user_id):
         'user_profile': user_profile,
         'is_following': is_following,
         'follower_count': follower_count,
+        'original_posts': original_posts,
     })
 
 @login_required
