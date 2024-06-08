@@ -1,6 +1,7 @@
 # Hootter(Twitter clone)
 
 ![img.png](img.png)
+![img_1.png](img_1.png)
 
 ## Author's context:
 Last week, I published my first homegrown CRUD: [Yindeed](https://github.com/martn2023/yindeed1/blob/master/README.md). The learnings and feedback from mentors has driven the following goals for this project:
