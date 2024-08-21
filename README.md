@@ -1,4 +1,4 @@
-# Hootter(Twitter clone)
+# Hootter (Twitter clone)
 
 ![img.png](img.png)
 ![img_1.png](img_1.png)
